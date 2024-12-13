@@ -2,9 +2,9 @@ package Controllers;
 
 
 import com.springboot.cardealership.springboot.classes.Dealership;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,5 +21,18 @@ public class DealershipController {
         return resultsFound;
     }
 
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Dealership addDealership(@RequestBody Dealership dealership) {
+        System.out.println(dealership);
+        return dealership;
+    }
 
+    @DeleteMapping
+    @RequestMapping(path = "/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable ("id") int dealershipId) {
+        System.out.println("Deleted dealership ID" + dealershipId);
+
+    }
 }

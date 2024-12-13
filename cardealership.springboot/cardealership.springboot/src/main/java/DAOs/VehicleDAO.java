@@ -24,10 +24,11 @@ public interface VehicleDAO {
 
     ArrayList<Vehicle> findAllVehiclesByPrice(double minPrice,int maxPrice);
 
+    ArrayList<Vehicle> findAllVehiclesByPrice(double minPrice, double maxPrice);
+
     void addVehicle(Vehicle vehicle);
 
     void removeVehicle(int vin);
 
-    ArrayList<Vehicle> findAllVehiclesByPrice(double minPrice, double maxPrice);
 }
 

@@ -1,28 +1,26 @@
 package com.springboot.cardealership.springboot.classes;
 
+import DAOs.LeaseContractDAO;
+
 import java.time.LocalDate;
 
 public class LeaseContract {
 
-    int contractId;
-    String contractType;
-    LocalDate contractDate;
-    String customerName;
-    String customerEmail;
-    int vin;
-    int year;
-    String make;
-    String model;
-    String vehicleType;
-    String color;
-    double odometer;
-    double salesTax;
-    double recordingFee;
-    double processingFee;
-    boolean isFinanced;
-    double monthlyPayment;
+    private int contractId;
+    private String contractType;
+    private LocalDate contractDate;
+    private String customerName;
+    private String customerEmail;
+    private int vin;
+    private int year;
+    private String make;
+    private String model;
+    private String vehicleType;
+    private String color;
+    private double odometer, endingValue, totalPrice, leaseFee, leaseMonthlyPayment;
 
-    public LeaseContract(int contractId, String contractType, LocalDate contractDate, String customerName, String customerEmail, int vin, int year, String make, String model, String vehicleType, String color, double odometer, double salesTax, double recordingFee, double processingFee, boolean isFinanced, double monthlyPayment) {
+
+    public LeaseContract(int contractId, String contractType, LocalDate contractDate, String customerName, String customerEmail, int vin, int year, String make, String model, String vehicleType, String color, double odometer, double endingValue, double totalPrice, double leaseFee, double leaseMonthlyPayment) {
         this.contractId = contractId;
         this.contractType = contractType;
         this.contractDate = contractDate;
@@ -35,11 +33,14 @@ public class LeaseContract {
         this.vehicleType = vehicleType;
         this.color = color;
         this.odometer = odometer;
-        this.salesTax = salesTax;
-        this.recordingFee = recordingFee;
-        this.processingFee = processingFee;
-        this.isFinanced = isFinanced;
-        this.monthlyPayment = monthlyPayment;
+        this.endingValue = endingValue;
+        this.totalPrice = totalPrice;
+        this.leaseFee = leaseFee;
+        this.leaseMonthlyPayment = leaseMonthlyPayment;
+    }
+
+    public LeaseContract() {
+
     }
 
     public int getContractId() {
@@ -90,23 +91,46 @@ public class LeaseContract {
         return odometer;
     }
 
-    public double getSalesTax() {
-        return salesTax;
+    public double getEndingValue() {
+        return endingValue;
     }
 
-    public double getRecordingFee() {
-        return recordingFee;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public double getProcessingFee() {
-        return processingFee;
+    public double getLeaseFee() {
+        return leaseFee;
     }
 
-    public boolean isFinanced() {
-        return isFinanced;
+    public double getLeaseMonthlyPayment() {
+        return leaseMonthlyPayment;
     }
 
-    public double getMonthlyPayment() {
-        return monthlyPayment;
+    protected double calculateMonthlyPayment(double principal, double annualInterestRate, int months) {
+
+        double monthlyInterestRate = annualInterestRate / 100 / 12;
+
+        if (monthlyInterestRate == 0) {
+            return principal / months;
+        } else {
+            return principal * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, months)) /
+                    (Math.pow(1 + monthlyInterestRate, months) - 1);
+        }
+
+        public double getMonthlyPayment() {
+            this.leaseMonthlyPayment = calculateMonthlyPayment(getTotalPrice(), 4.0, 36);
+            return this.leaseMonthlyPayment;
+        }
+
+        public double getTotalPrice() {
+            this.totalPrice = endingValue + leaseFee + leaseMonthlyPayment;
+            return totalPrice;
+        }
+
     }
+
 }
+
+
+

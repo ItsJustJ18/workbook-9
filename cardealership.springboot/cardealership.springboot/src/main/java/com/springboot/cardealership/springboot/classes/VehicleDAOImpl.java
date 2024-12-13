@@ -1,7 +1,7 @@
-package com.springboot.cardealership.springboot;
+package com.springboot.cardealership.springboot.classes;
 
 import DAOs.VehicleDAO;
-import com.springboot.cardealership.springboot.classes.Vehicle;
+
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
